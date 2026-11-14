@@ -3,14 +3,14 @@ package assembly;
 import java.util.concurrent.Semaphore;
 
 public class EstacionsSoldadura {
-  private final int numEstacions;
+  private final int numEstacio;
   private final Semaphore semafor;
   private final boolean[] estacionsOcupades;
 
-  public EstacionsSoldadura(int numEstacions){
-    this.numEstacions = numEstacions;
-    this.semafor = new Semaphore(numEstacions);
-    this.estacionsOcupades = new boolean[numEstacions];
+  public EstacionsSoldadura(int numEstacio){
+    this.numEstacio = numEstacio;
+    this.semafor = new Semaphore(numEstacio);
+    this.estacionsOcupades = new boolean[numEstacio];
   }
 
   //1-control, si no hi ha places lliures - es bloquetja
@@ -18,9 +18,9 @@ public class EstacionsSoldadura {
     semafor.acquire();
     int estacioAssignada = -1;
 
-    //evitar que dos robots agafin sa mateixa posició fisica quan obtenen es permisos
+    //evitar que més de un robot agafin sa mateixa posició fisica quan obtenen es permisos
     synchronized (this) {
-      for (int i = 0; i < numEstacions; i++){
+      for (int i = 0; i < numEstacio; i++){
         if(!estacionsOcupades[i]){
           estacionsOcupades[i] = true;
           estacioAssignada = i;
@@ -28,9 +28,17 @@ public class EstacionsSoldadura {
         }
       }  
     }
-    System.err.println("Robot amb id " + idRobot + " ha ocupat sa estació # " + estacioAssignada);
-
+    System.out.println("Robot amb id " + idRobot + " ha ocupat sa estació # " + estacioAssignada);
+    return estacioAssignada;
   }
 
+  public void alliberarEstacio(int idRobot, int numEstacio){
+    synchronized (this) {
+      estacionsOcupades[numEstacio] = false;
+    }
 
-}
+    System.out.println("Robot amb id " + idRobot + "ha sortit de la estació " + numEstacio);
+
+    semafor.release();
+  }
+  }
