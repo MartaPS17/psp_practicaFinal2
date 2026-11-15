@@ -1,14 +1,13 @@
 package assembly;
 
 public class Bateria {
+  private static int contadorBateries = 0;
   private final int id;
 
-  public Bateria(int id){
-    this.id = id;
+  public Bateria(){
+    this.id = ++contadorBateries;
   }
-
   public int getBateriaId(){
-    return id;
+    return this.id;
   }
-
 }
