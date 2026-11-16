@@ -38,7 +38,7 @@ public class RobotTask implements Runnable {
         Thread.sleep(500);
 
       } finally {
-        estacions.alliberarEstacio(idRobot, idRobot);
+        estacions.alliberarEstacio(idRobot, numEstacio);
       }
       //signa certificat
       tauler.signarCertificat(idRobot);

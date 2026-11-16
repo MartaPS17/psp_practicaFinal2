@@ -25,11 +25,14 @@ public class EstacionsSoldadura {
         if (!estacionsOcupades[i]) {
           estacionsOcupades[i] = true;
           estacioAssignada = i;
+
+          System.out.println("Estat de les estacions: "
+        + java.util.Arrays.toString(estacionsOcupades));
           break;
         }
       }
     }
-    System.out.println("Robot amb id " + idRobot + " ha ocupat sa estació # " + estacioAssignada);
+    System.out.println("Robot amb id " + "" + idRobot + " ha ocupat sa estació # " + estacioAssignada);
     return estacioAssignada;
   }
 
