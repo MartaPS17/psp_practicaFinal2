@@ -22,13 +22,31 @@ public class Main {
         llistaFils.add(filsDashboard);
 
         //4. Consumidors
-        RobotTask[] robots = new RobotTask[10];
-        Thread[] tRobots = new Thread[10];
-        for (int i = 0; i <=4; i++){
+        int numRobots = 5;
+        RobotTask[] robots = new RobotTask[numRobots];
+        Thread[] tRobots = new Thread[numRobots];
+        for (int i = 0; i < numRobots; i++){
             robots[i] = new RobotTask(i, cintaX, estacioY, taula, supervisor);
-            tRobots[i] = new Thread(robots[i]);
+
+            tRobots[i] = new Thread(robots[i], "Robot " +(i + 1));
+
+            tRobots[i].start();
         }
 
-    
+        //5.Productors
+        int numAGV = 5;
+        AGVTask[] agvs = new AGVTask[numAGV];
+        Thread[] tAGVs = new Thread[numAGV];
+        for (int i = 0; i < numAGV; i++){
+            agvs[i] = new AGVTask(i + 1, cintaX);
+            tAGVs[i] = new Thread(agvs[i], "AGV | " + (i + 1));
+            tAGVs[i].start();
+        }
+
+        // Pausar fabrica
+        try {
+            
+        } catch () {
+        }
     }
 }
