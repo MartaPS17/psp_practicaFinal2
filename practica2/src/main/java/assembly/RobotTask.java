@@ -1,6 +1,4 @@
 package assembly;
-import java.io.InterruptedIOException;
-import assembly.EstacionsSoldadura;
 
 public class RobotTask implements Runnable {
   private final int idRobot;
@@ -11,11 +9,12 @@ public class RobotTask implements Runnable {
   private volatile boolean executant;
 
   //constructor
-  public RobotTask(int idRobot, Cinta cinta, TaulaRegistre tauler, SupervisorCentral supervisor){
+  public RobotTask(int idRobot, Cinta cinta, EstacionsSoldadura estacions,TaulaRegistre tauler, SupervisorCentral supervisor){
     this.idRobot =idRobot;
     this.cinta = cinta;
     this.tauler = tauler;
     this.supervisor = supervisor;
+    this.estacions = estacions;
   }
 
   public void aturarRobot(){
@@ -27,14 +26,19 @@ public class RobotTask implements Runnable {
   public void run(){
     System.out.println("Robot " + idRobot + "iniciat i a la espera.");
     while (executant && !Thread.currentThread().isInterrupted()){
+      try{
       //agafa bateria
-      Bateria bateria = cinta.extreureBateria();
+      Bateria bateria = cinta.extreureBateria(idRobot);
       //estacio soldadura
       int numEstacio = estacions.ocuparEstacio(idRobot);
+      try{
       Thread.sleep(500); //simular temps 
-      estacions.alliberarEstacio(idRobot, numEstacio);
+      
+      }finally{
       //signar certificat
-      tauler.signarCertificat();
+      estacions.alliberarEstacio(idRobot, numEstacio);
+      }
+      tauler.signarCertificat(idRobot);
 
     } catch(InterruptedException e){
       System.err.println("Robot amb id: " + idRobot + " ha estat interromput.");
@@ -43,5 +47,5 @@ public class RobotTask implements Runnable {
 
     }
   }
-
+}
 }

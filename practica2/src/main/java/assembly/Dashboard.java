@@ -19,13 +19,24 @@ public class Dashboard implements Runnable{
     System.out.println("Dashboard activat...");
     while (executant && !Thread.currentThread().isInterrupted()) { 
       try {
-          Thread.sleep(200);
-          //consultar estat
+          Thread.sleep(2000);
+          //consultar estat cinta i estacions
           int bateriesActuals = cinta.getCapacitatActual();
           int bateriesMaximes = cinta.getCapacitatMax();
-          int estacionsLliures = estacions.getNumEstacionsLliures();
-          
-      } catch (Exception e) {
+          int estacionsLliures = estacions.getEstacionsLliures();
+
+          // Imprimir per pantalla
+
+          System.out.println("----------DASHBOARD---------\n" + "---------------------------");
+
+          System.out.println("Cinta: " + bateriesActuals + "/" + bateriesMaximes);
+          System.out.println("Estacions lliures: " + estacionsLliures);
+          System.err.println("------------------------");
+        //durant thread sleep...
+      } catch (InterruptedException e) {
+        System.out.println("Dashbaord interromput. Esta dormint vale? Espera.");
+        Thread.currentThread().interrupt(); 
+        break;
       }
       
         
