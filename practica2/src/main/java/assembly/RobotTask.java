@@ -6,7 +6,7 @@ public class RobotTask implements Runnable {
   private final EstacionsSoldadura estacions;
   private final TaulaRegistre tauler;
   private final SupervisorCentral supervisor;
-  private volatile boolean executant;
+  private volatile boolean executant = true;
 
   //constructor
   public RobotTask(int idRobot, Cinta cinta, EstacionsSoldadura estacions,TaulaRegistre tauler, SupervisorCentral supervisor){
@@ -25,6 +25,7 @@ public class RobotTask implements Runnable {
   @Override
   public void run(){
     System.out.println("Robot " + idRobot + "  iniciat i a la espera.");
+
     while (executant && !Thread.currentThread().isInterrupted()){
       try{
         supervisor.comprovarAlerta(idRobot);
@@ -32,9 +33,14 @@ public class RobotTask implements Runnable {
       Bateria bateria = cinta.extreureBateria(idRobot);
       //estacio soldadura
       int numEstacio = estacions.ocuparEstacio(idRobot); 
-      Thread.sleep(500); 
-      estacions.alliberarEstacio(idRobot, numEstacio);
-      
+
+      try{
+        Thread.sleep(500);
+
+      } finally {
+        estacions.alliberarEstacio(idRobot, idRobot);
+      }
+      //signa certificat
       tauler.signarCertificat(idRobot);
 
     } catch(InterruptedException e){

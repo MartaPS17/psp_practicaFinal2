@@ -19,6 +19,7 @@ public class Main {
         //3.Dashboard
         Dashboard dash = new Dashboard(cintaX, estacioY);
         Thread filsDashboard = new Thread(dash, "Dashboard");
+        filsDashboard.start();
         llistaFils.add(filsDashboard);
 
         //4. Consumidors
