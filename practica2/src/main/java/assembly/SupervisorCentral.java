@@ -1,7 +1,7 @@
 package assembly;
 
 public class SupervisorCentral {
-  private boolean alertaSuperescalfament = true;
+  private boolean alertaSuperescalfament = false;
 
   public synchronized void comprovarAlerta(int idRobot) throws InterruptedException{
     while(alertaSuperescalfament){

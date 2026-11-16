@@ -26,7 +26,6 @@ public class Dashboard implements Runnable{
           int estacionsLliures = estacions.getEstacionsLliures();
 
           // Imprimir per pantalla
-
           System.out.println("----------DASHBOARD---------\n" + "---------------------------");
 
           System.out.println("Cinta: " + bateriesActuals + "/" + bateriesMaximes);

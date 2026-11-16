@@ -27,17 +27,14 @@ public class RobotTask implements Runnable {
     System.out.println("Robot " + idRobot + "  iniciat i a la espera.");
     while (executant && !Thread.currentThread().isInterrupted()){
       try{
+        supervisor.comprovarAlerta(idRobot);
       //agafa bateria
       Bateria bateria = cinta.extreureBateria(idRobot);
       //estacio soldadura
-      int numEstacio = estacions.ocuparEstacio(idRobot);
-      try{
-      Thread.sleep(500); //simular temps 
-      
-      }finally{
-      //signar certificat
+      int numEstacio = estacions.ocuparEstacio(idRobot); 
+      Thread.sleep(500); 
       estacions.alliberarEstacio(idRobot, numEstacio);
-      }
+      
       tauler.signarCertificat(idRobot);
 
     } catch(InterruptedException e){
@@ -48,4 +45,5 @@ public class RobotTask implements Runnable {
     }
   }
 }
+
 }

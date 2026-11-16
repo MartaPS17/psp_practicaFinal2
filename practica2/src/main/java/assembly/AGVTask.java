@@ -17,7 +17,8 @@ public class AGVTask implements Runnable {
   @Override
   public void run(){
     System.out.println("Productor AGV #" + idAGV + " activat.");
-    while (!executant && !Thread.currentThread().isInterrupted()) {
+    
+    while (executant && !Thread.currentThread().isInterrupted()) {
       try {
           Bateria novaBateria = new Bateria();
           cinta.posarBateria(novaBateria, idAGV);
