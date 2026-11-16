@@ -4,14 +4,14 @@ import assembly.EstacionsSoldadura;
 
 public class RobotTask implements Runnable {
   private final int idRobot;
-  private final CintaBateries cinta;
+  private final Cinta cinta;
   private final EstacionsSoldadura estacions;
   private final TaulaRegistre tauler;
   private final SupervisorCentral supervisor;
   private volatile boolean executant;
 
   //constructor
-  public RobotTask(int idRobot, CintaBateries cinta, TaulaRegistre tauler, SupervisorCentral supervisor){
+  public RobotTask(int idRobot, Cinta cinta, TaulaRegistre tauler, SupervisorCentral supervisor){
     this.idRobot =idRobot;
     this.cinta = cinta;
     this.tauler = tauler;
@@ -27,7 +27,7 @@ public class RobotTask implements Runnable {
   public void run(){
     System.out.println("Robot " + idRobot + "iniciat i a la espera.");
     while (executant && !Thread.currentThread().isInterrupted()){
-      //agafra bateria
+      //agafa bateria
       Bateria bateria = cinta.extreureBateria();
       //estacio soldadura
       int numEstacio = estacions.ocuparEstacio(idRobot);

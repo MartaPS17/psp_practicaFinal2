@@ -23,6 +23,19 @@ public class Cinta {
     this.cintaNoBuida = lock.newCondition();
   }
 
+  public int getCapacitatActual(){
+    lock.lock();
+    try {
+      return cinta.size();
+    } finally{
+      lock.unlock();
+    }
+  }
+
+  public int getCapacitatMax(){
+    return capacitatMax;
+  }
+
   // metode per robot productor posar bateria a cinta
   public void posarBateria(Bateria bateria, int idAGV) throws InterruptedException {
     lock.lock();
@@ -49,7 +62,7 @@ public class Cinta {
         System.out.println("ALERTA: CINTA BUIDA.Robot consumidor # " + idRobot + " no ha pogut extreure una bateria.");
         cintaNoBuida.await();
       }
-      Bateria bateria = cinta.poll();
+      Bateria bateria = cinta.poll(); 
 
       System.out.println("Consumidor robot # " + idRobot + "ha agafat la bateria # " + bateria.getBateriaId()
           + " | Capacitat actual: " + cinta.size() + "/" + capacitatMax);
