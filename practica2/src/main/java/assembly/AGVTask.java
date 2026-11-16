@@ -10,7 +10,7 @@ public class AGVTask implements Runnable {
     this.cinta = cinta;
   }
 
-  public void executant(){
+  public void aturarAGV(){
     this.executant = false;
   }
 

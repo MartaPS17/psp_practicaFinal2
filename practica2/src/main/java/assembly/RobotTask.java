@@ -24,7 +24,7 @@ public class RobotTask implements Runnable {
   //metode run
   @Override
   public void run(){
-    System.out.println("Robot " + idRobot + "iniciat i a la espera.");
+    System.out.println("Robot " + idRobot + "  iniciat i a la espera.");
     while (executant && !Thread.currentThread().isInterrupted()){
       try{
       //agafa bateria
@@ -41,7 +41,7 @@ public class RobotTask implements Runnable {
       tauler.signarCertificat(idRobot);
 
     } catch(InterruptedException e){
-      System.err.println("Robot amb id: " + idRobot + " ha estat interromput.");
+      System.err.println("Robot amb id: " + idRobot + "  ha estat interromput.");
       Thread.currentThread().interrupt();
       break;
 

@@ -43,10 +43,41 @@ public class Main {
             tAGVs[i].start();
         }
 
-        // Pausar fabrica
+        // Pausar fabrica i tancar totes es processos amb join()
         try {
-            
-        } catch () {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            System.err.println("Fàbrica pausada (10s)");
         }
+
+        //enviar interrupció
+        dash.aturar();
+        filsDashboard.interrupt();
+
+        for (int i = 0; i < numRobots; i++){
+            robots[i].aturarRobot();
+            tRobots[i].interrupt();
+        }
+        for (int i = 0; i < numAGV; i++){
+            agvs[i].aturarAGV();
+            tAGVs[i].interrupt();
+        }
+
+        //join()
+
+        try {
+            filsDashboard.join();
+            for(int i = 0; i < numRobots; i++){
+                tRobots[i].join();
+            }
+            for(int i = 0; i < numAGV; i++){
+                tAGVs[i].join();
+            }
+            
+        } catch (InterruptedException e) {
+            System.err.println("ALERTA: Error durant el join per el tancament dels fils.");
+        }
+
+        
     }
 }
